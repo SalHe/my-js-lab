@@ -9,7 +9,7 @@ const queue = createQueue<MyTask>({
     maxJobs: 3
 });
 
-queue.onProcess(
+queue.on('process',
     job => {
         console.log(`Start processing ${job.data.name}`);
         (() => {
@@ -25,8 +25,8 @@ queue.onProcess(
             }, 100);
         })();
     })
-    .onProgressUpdated(job => console.log(`Progress updated ${job.data.name} ... ${job.progress()}`))
-    .onCompleted(job => console.log(`Completed ${job.data.name}`));
+    .on('progress', job => console.log(`Progress updated ${job.data.name} ... ${job.progress()}`))
+    .on('complete', job => console.log(`Completed ${job.data.name}`));
 
 queue.add({ name: 'task1' });
 queue.add({ name: 'task2' });
